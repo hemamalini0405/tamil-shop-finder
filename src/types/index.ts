@@ -17,6 +17,17 @@ export interface Offer {
   expiryDate?: string;
 }
 
+export interface ShopItem {
+  id: string;
+  name: string;
+  category: string;
+  price: number;
+  offer?: string;
+  discountPercentage?: number;
+  finalPrice: number;
+  availability: 'In Stock' | 'Limited Stock' | 'Out of Stock';
+}
+
 export interface Shop {
   id: string;
   name: string;
@@ -33,6 +44,7 @@ export interface Shop {
   rating: number;
   image?: string;
   category: string;
+  items: ShopItem[];
 }
 
 export interface Product {
@@ -56,4 +68,5 @@ export interface PriceComparison {
   shopId: string;
   isBestDeal?: boolean;
   isHighestDiscount?: boolean;
+  category: string;
 }
