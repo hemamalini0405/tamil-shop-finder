@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { getShopsByLocation, getProductComparisons } from '@/data/mockData';
+import { getShopsByLocation, getProductComparisons, getProductCategories } from '@/data/mockData';
 import { Shop, PriceComparison } from '@/types';
 import { useToast } from '@/hooks/use-toast';
 import {
@@ -186,18 +186,18 @@ const ShopsPage = () => {
               </Button>
             </div>
             <div className="flex flex-wrap gap-2 mt-4 justify-center">
-              {['Mobile phones', 'Laptops', 'Headphones', 'Grocery items'].map((item) => (
+              {getProductCategories().map((category) => (
                 <Button
-                  key={item}
+                  key={category}
                   variant="outline"
                   size="sm"
                   onClick={() => {
-                    setProductSearch(item);
-                    setPriceComparisons(getProductComparisons(item, location));
+                    setProductSearch(category);
+                    setPriceComparisons(getProductComparisons(category, location));
                     setShowComparison(true);
                   }}
                 >
-                  {item}
+                  {category}
                 </Button>
               ))}
             </div>
@@ -405,8 +405,9 @@ const ShopsPage = () => {
             {shops.map((shop, index) => (
               <Card
                 key={shop.id}
-                className="overflow-hidden animate-slide-up"
+                className="overflow-hidden animate-slide-up cursor-pointer hover:shadow-elegant hover:scale-[1.02] transition-all duration-300"
                 style={{ animationDelay: `${index * 100}ms` }}
+                onClick={() => navigate(`/shop/${shop.id}`)}
               >
                 <CardHeader className="pb-3">
                   <div className="flex items-start justify-between">
@@ -464,6 +465,13 @@ const ShopsPage = () => {
                       </div>
                     </div>
                   )}
+
+                  {/* View Items CTA */}
+                  <div className="pt-3 border-t border-border">
+                    <Button variant="outline" className="w-full" size="sm">
+                      View All Items →
+                    </Button>
+                  </div>
                 </CardContent>
               </Card>
             ))}
